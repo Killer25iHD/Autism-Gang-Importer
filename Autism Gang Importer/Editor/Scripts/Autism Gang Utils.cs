@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
+
 public static class FindMissingScriptsRecursively
 {
     [MenuItem("𝓐𝓾𝓽𝓲𝓼𝓶 𝓖𝓪𝓷𝓰/𝓤𝓽𝓲𝓵𝓲𝓽𝓲𝓮𝓼/𝓡𝓮𝓶𝓸𝓿𝓮 𝓜𝓲𝓼𝓼𝓲𝓷𝓰 𝓢𝓬𝓻𝓲𝓹𝓽𝓼")]
@@ -11,11 +12,11 @@ public static class FindMissingScriptsRecursively
         var deeperSelection = Selection.gameObjects.SelectMany(go => go.GetComponentsInChildren<Transform>(true))
             .Select(t => t.gameObject);
         var prefabs = new HashSet<Object>();
-        int compCount = 0;
-        int goCount = 0;
+        var compCount = 0;
+        var goCount = 0;
         foreach (var go in deeperSelection)
         {
-            int count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go);
+            var count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(go);
             if (count > 0)
             {
                 if (PrefabUtility.IsPartOfAnyPrefab(go))
@@ -51,7 +52,7 @@ public static class FindMissingScriptsRecursively
         // go deep before removing, to differantiate local overrides from missing in source
         RecursivePrefabSource(source, prefabs, ref compCount, ref goCount);
 
-        int count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(source);
+        var count = GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(source);
         if (count > 0)
         {
             Undo.RegisterCompleteObjectUndo(source, "Remove missing scripts");

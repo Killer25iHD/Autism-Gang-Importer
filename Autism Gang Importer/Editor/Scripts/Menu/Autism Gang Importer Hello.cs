@@ -1,24 +1,57 @@
-﻿
-using UnityEngine;
+﻿using System.IO;
+using System.Runtime.InteropServices;
 using UnityEditor;
+using UnityEngine;
 
 namespace AutismImporter
 {
-
     public partial class AutismGangMenu : EditorWindow
     {
         private Texture _HelloImage;
 
-        void ShowHello()
+        private void OnEnable()
         {
-            GUIStyle a = new GUIStyle(EditorStyles.textField);
+            var discordDllPath = Application.dataPath +
+                                 "/Autism-Gang-Importer/Autism Gang Importer/DiscordGameSDK/Dependencies/discord_game_sdk.dll";
+
+            if (File.Exists(discordDllPath))
+            {
+                SetDllDirectory(discordDllPath);
+            }
+            else
+            {
+                Debug.LogWarning($"Discord DLL path does not exist: {discordDllPath}");
+            }
+            EnsureDiscordControllerExists();
+        }
+        private static void EnsureDiscordControllerExists()
+        {
+            if (!GameObject.Find("AutismGangDiscord"))
+            {
+                var gameObjectToAttachTo = new GameObject("AutismGangDiscord");
+                gameObjectToAttachTo.AddComponent<DiscordController>();
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var gmobj in (GameObject[])FindObjectsOfType(typeof(GameObject)))
+                if (gmobj.name == "AutismGangDiscord")
+                    DestroyImmediate(gmobj);
+            DiscordController.Dispose();
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool SetDllDirectory(string lpPathName);
+
+        private void ShowHello()
+        {
+            var a = new GUIStyle(EditorStyles.textField);
             a.normal.textColor = Color.black;
-            GUIStyle c = new GUIStyle(EditorStyles.miniButton);
+            var c = new GUIStyle(EditorStyles.miniButton);
             c.normal.textColor = Color.green;
-            GUIStyle b = new GUIStyle(EditorStyles.textField);
+            var b = new GUIStyle(EditorStyles.textField);
             b.normal.textColor = Color.magenta;
-
-
 
 
             EditorGUILayout.Separator();
@@ -35,7 +68,6 @@ namespace AutismImporter
 
 
             {
-
                 GUILayout.Space(20);
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.Label("Thank you for using the Autism Gang Importer!");
@@ -43,12 +75,14 @@ namespace AutismImporter
 
                 GUILayout.Space(20);
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("If you have any questions,\nplease be sure to ask the Admins or Mods of our Discord First!\nThank you for your Appreciation! ♥");
+                GUILayout.Label(
+                    "If you have any questions,\nplease be sure to ask the Admins or Mods of our Discord First!\nThank you for your Appreciation! ♥");
                 EditorGUILayout.EndHorizontal();
 
                 GUILayout.Space(20);
                 EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("If you have any Feedback,\nplease be sure to reach out to the Admins or Mods of our Discord.♥");
+                GUILayout.Label(
+                    "If you have any Feedback,\nplease be sure to reach out to the Admins or Mods of our Discord.♥");
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
@@ -71,7 +105,6 @@ namespace AutismImporter
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Made by: LoseMyXelf");
                 EditorGUILayout.EndHorizontal();
-
             }
 
 
@@ -79,16 +112,6 @@ namespace AutismImporter
             GUILayout.Space(20);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-
-
-
-
-
-
         }
-
-
-
     }
-
 }

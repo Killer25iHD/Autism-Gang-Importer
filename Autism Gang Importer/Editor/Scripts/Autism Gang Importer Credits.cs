@@ -1,24 +1,20 @@
-﻿
+﻿using UnityEditor;
 using UnityEngine;
-using UnityEditor;
 
 namespace AutismImporter
 {
-
     public partial class AutismGangMenu : EditorWindow
     {
         private Texture _creditsImage;
 
-        void ShowCredits()
+        private void ShowCredits()
         {
-            GUIStyle a = new GUIStyle(EditorStyles.textField);
+            var a = new GUIStyle(EditorStyles.textField);
             a.normal.textColor = Color.white;
-            GUIStyle c = new GUIStyle(EditorStyles.miniButton);
+            var c = new GUIStyle(EditorStyles.miniButton);
             c.normal.textColor = Color.green;
-            GUIStyle b = new GUIStyle(EditorStyles.textField);
+            var b = new GUIStyle(EditorStyles.textField);
             b.normal.textColor = Color.magenta;
-
-
 
 
             EditorGUILayout.Separator();
@@ -35,8 +31,6 @@ namespace AutismImporter
 
 
             {
-
-
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("TT   ~ Thanks to all of you!");
                 EditorGUILayout.EndHorizontal();
@@ -77,7 +71,6 @@ namespace AutismImporter
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField("Made by: LoseMyXelf");
                 EditorGUILayout.EndHorizontal();
-
             }
 
 
@@ -85,16 +78,6 @@ namespace AutismImporter
             GUILayout.Space(20);
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-
-
-
-
-
-
         }
-
-
-
     }
-
 }

@@ -1,16 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace AutismImporter
 {
-
     public partial class AutismGangMenu : EditorWindow
     {
-        
-
         [MenuItem("𝓐𝓾𝓽𝓲𝓼𝓶 𝓖𝓪𝓷𝓰/𝓱𝓮𝓵𝓹/𝓜𝔂   𝓓𝓲𝓼𝓬𝓸𝓻𝓭")]
         public static void ShowVRChatDiscord()
         {
@@ -40,11 +34,11 @@ namespace AutismImporter
         {
             Application.OpenURL("http://losemyxelf.xyz/service.html");
         }
+
         [MenuItem("𝓐𝓾𝓽𝓲𝓼𝓶 𝓖𝓪𝓷𝓰/𝓤𝓽𝓲𝓵𝓲𝓽𝓲𝓮𝓼/𝓵𝔂𝔃𝓮 𝓓𝓲𝓼𝓬𝓸𝓻𝓭")]
         public static void ShowlyzeDiscord()
         {
             Application.OpenURL("https://discord.gg/NA7HqbqTF9");
         }
     }
-
 }

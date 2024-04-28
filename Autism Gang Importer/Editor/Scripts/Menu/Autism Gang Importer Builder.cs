@@ -8,6 +8,4 @@ namespace AutismImporter
         void RegisterBuilder(AutismGangMenu baseBuilder);
         void SelectAllComponents();
     }
-
 }
-
