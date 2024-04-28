@@ -49,7 +49,7 @@ namespace AutismImporter
             GUILayout.EndVertical();
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-            tabs = 0;
+
 
             switch (tabs)
             {
