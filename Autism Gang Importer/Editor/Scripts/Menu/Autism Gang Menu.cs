@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using AutismImporter.Settings;
 
 namespace AutismImporter
 {
@@ -21,7 +22,7 @@ namespace AutismImporter
         public int tabs = 3;
         
 
-        private readonly string[] _tabOptions = { "Welcome", "Importer", "Credits" };
+        private readonly string[] _tabOptions = { "Welcome", "Importer", "Credits", "Settings" };
 
         private Texture _banner;
 
@@ -61,6 +62,9 @@ namespace AutismImporter
                     break;
                 case 2:
                     ShowCredits();
+                    break;
+                case 3:
+                    SettingsPage.ShowSettings();
                     break;
                 default:
                     ShowHello();

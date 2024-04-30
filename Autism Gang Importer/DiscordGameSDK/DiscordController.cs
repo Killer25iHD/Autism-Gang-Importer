@@ -30,7 +30,7 @@ public class DiscordController : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        Dispose();
+         Dispose();
     }
 
     private void UpdateDiscordActivity(Scene currentScene)
@@ -53,10 +53,7 @@ public class DiscordController : MonoBehaviour
             },
             Timestamps = timestamp,
         };
-        activity.Secrets = new ActivitySecrets
-        {
-            Join = "test",
-        };
+       
         
 
         activityManager.UpdateActivity(activity, result =>

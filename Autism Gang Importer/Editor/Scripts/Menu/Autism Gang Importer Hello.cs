@@ -71,17 +71,10 @@ namespace AutismImporter
         {
             string[] messages = { Message1, Message2, Message3 };
             
-            for (var i = 0; i < 4; i++)
-            {
-                EditorGUILayout.Separator();
-            }
+            SeperatorHelper.DrawSeparators(4);
 
             GUI.backgroundColor = Color.red;
             DrawGUI(messages);
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Made by: LoseMyXelf");
-            EditorGUILayout.EndHorizontal();
         }
         
         private void DrawGUI(string[] messages)
@@ -99,11 +92,9 @@ namespace AutismImporter
                 EditorGUILayout.EndHorizontal();
             }
 
-            for (int i = 0; i < 15; i++)
-            {
-                EditorGUILayout.Space();
-            }
+            SeperatorHelper.DrawSpace(15);
 
+            EditorGUILayout.LabelField("Made by: LoseMyXelf");
             GUILayout.EndVertical();
             GUILayout.Space(20);
             GUILayout.FlexibleSpace();

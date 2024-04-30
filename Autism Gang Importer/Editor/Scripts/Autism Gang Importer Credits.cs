@@ -16,11 +16,7 @@ namespace AutismImporter
             var b = new GUIStyle(EditorStyles.textField);
             b.normal.textColor = Color.magenta;
 
-
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
-            EditorGUILayout.Separator();
+            SeperatorHelper.DrawSeparators(4);
 
 
             GUILayout.BeginHorizontal();
@@ -51,21 +47,7 @@ namespace AutismImporter
                 EditorGUILayout.LabelField("notlyze ~ For Helping with the Downloadprocess");
                 EditorGUILayout.EndHorizontal();
 
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
-                EditorGUILayout.Space();
+                SeperatorHelper.DrawSpace(15);
 
 
                 EditorGUILayout.BeginHorizontal();
