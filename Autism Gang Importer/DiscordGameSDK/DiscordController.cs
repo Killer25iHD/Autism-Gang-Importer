@@ -13,9 +13,9 @@ public class DiscordController : MonoBehaviour
     {
         Start = (long)time.TotalSeconds
     };
-    private Scene scene;
+    private static Scene scene;
 
-    private void Start()
+    public static void Start()
     {
         _discord = new Discord.Discord(ClientId, (ulong)CreateFlags.Default);
         scene = SceneManager.GetActiveScene(); // Fetch current scene
@@ -33,7 +33,7 @@ public class DiscordController : MonoBehaviour
          Dispose();
     }
 
-    private void UpdateDiscordActivity(Scene currentScene)
+    public static void UpdateDiscordActivity(Scene currentScene)
     {
         if (_discord == null)
             return;
