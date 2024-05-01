@@ -1,8 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AutismImporter.Settings.Config;
 using UnityEditor;
 using UnityEngine;
 
@@ -142,7 +144,8 @@ namespace AutismImporter
 
         private void WcOnDownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            var tempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/temp.unitypackage";
+            var tempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                           "/temp.unitypackage";
             EditorUtility.ClearProgressBar();
             AssetDatabase.ImportPackage(tempPath, false);
             File.Delete(tempPath);
@@ -153,7 +156,8 @@ namespace AutismImporter
 
         private void WcOnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            var tempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "/temp.unitypackage";
+            var tempPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
+                           "/temp.unitypackage";
             var progress = e.ProgressPercentage;
             var cancelBar = EditorUtility.DisplayCancelableProgressBar("Downloading package...",
                 $"Downloading package... {progress}%", progress / 100f);
@@ -168,128 +172,73 @@ namespace AutismImporter
         private void ShowImport()
         {
             GUI.backgroundColor = Color.black;
-            var a = new GUIStyle(EditorStyles.textField);
-            a.normal.textColor = Color.white;
-            var c = new GUIStyle(EditorStyles.miniButton);
-            c.normal.textColor = Color.green;
-            var b = new GUIStyle(EditorStyles.textField);
-            b.normal.textColor = Color.magenta;
-            var d = new GUIStyle(EditorStyles.textField);
-            d.normal.textColor = Color.black;
+            var textStyleBlack = new GUIStyle(EditorStyles.textField);
+            textStyleBlack.normal.textColor = Color.white;
+            var miniButtonStyleGreen = new GUIStyle(EditorStyles.miniButton);
+            miniButtonStyleGreen.normal.textColor = Color.green;
+            var textStyleMagenta = new GUIStyle(EditorStyles.textField);
+            textStyleMagenta.normal.textColor = Color.magenta;
 
             changeLogScroll = GUILayout.BeginScrollView(changeLogScroll, false, false, GUIStyle.none,
                 GUI.skin.verticalScrollbar, GUILayout.Width(520));
             GUI.backgroundColor = Color.black;
-            GUILayout.Space(15);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                                   Avatar Shader", a);
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Poiyomi Toon v 9.0.34")) DownloadAndImportPackage(toon);
-            GUILayout.EndHorizontal();
-            GUI.backgroundColor = Color.white;
-            GUILayout.BeginHorizontal();
-            if (GUILayout.Button("Loli Eye Shader")) DownloadAndImportPackage(Lol);
-            if (GUILayout.Button("Arktoon Shaders 1.0.2")) DownloadAndImportPackage(Ark);
-            if (GUILayout.Button("Metallic FX v 5.0")) DownloadAndImportPackage(Met);
-            GUILayout.EndHorizontal();
 
-            GUILayout.Space(20);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                              Other Avatar Shader", a);
+            //Sorts Category and Items Correctly
+            var groups = ConfigManager
+                .Instance.Config.Importables.Importables
+                .OrderBy(i => i.Category)
+                .GroupBy(i => i.Category);
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Burning Glasses Shader")) DownloadAndImportPackage(Burn);
-            if (GUILayout.Button("Question of the Time")) DownloadAndImportPackage(QOTT);
-            if (GUILayout.Button("Crystal")) DownloadAndImportPackage(Cry);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("90 Hz Math Shader")) DownloadAndImportPackage(Math);
-            if (GUILayout.Button("Nek0s Payed Eye Shader v5")) DownloadAndImportPackage(Nek);
-            if (GUILayout.Button("Yukikos Fur Shader")) DownloadAndImportPackage(Yu);
-            GUILayout.EndHorizontal();
+            #region Design
 
-            GUILayout.Space(20);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                                Some Cancer Shader", a);
+            var headerStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 16,
+                alignment = TextAnchor.MiddleCenter,
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = Color.white }
+            };
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("DocMe")) DownloadAndImportPackage(Doc);
-            if (GUILayout.Button("Leviant v 2.9")) DownloadAndImportPackage(Lev);
-            if (GUILayout.Button("Dope v1")) DownloadAndImportPackage(Dope);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Dope v 2.3.1")) DownloadAndImportPackage(Dope2);
-            if (GUILayout.Button("Universe")) DownloadAndImportPackage(Uni);
-            if (GUILayout.Button("PoH 3D")) DownloadAndImportPackage(PoH);
-            GUILayout.EndHorizontal();
+            var importableStyle = new GUIStyle(GUI.skin.label)
+            {
+                fontSize = 12,
+                alignment = TextAnchor.MiddleLeft,
+                normal = { textColor = Color.white }
+            };
 
-            GUILayout.Space(20);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                                  Some Usefull Shit", a);
+            var buttonStyle = new GUIStyle(GUI.skin.button)
+            {
+                fontSize = 12,
+                fontStyle = FontStyle.Bold,
+                normal = { textColor = Color.white }
+            };
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("DPS")) DownloadAndImportPackage(DPS);
-            if (GUILayout.Button("Muscle Animator")) DownloadAndImportPackage(Muscle);
-            if (GUILayout.Button("QHierarchy Fix")) DownloadAndImportPackage(Q);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Toggle Maker Assistant")) DownloadAndImportPackage(Tog);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Overrenderer by lyze")) DownloadAndImportPackage(Overrender);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("HumanoidSpeed ")) DownloadAndImportPackage(Hum);
-            if (GUILayout.Button("GVAS Anim Tools")) DownloadAndImportPackage(Tool);
-            if (GUILayout.Button("Better Keyframing 3")) DownloadAndImportPackage(BTK);
-            GUILayout.EndHorizontal();
+            #endregion
 
-            GUILayout.Space(20);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                                           Prefabs", a);
+            foreach (var group in groups)
+            {
+                GUILayout.BeginVertical(GUI.skin.box);
+                GUILayout.Space(10);
+                GUILayout.Label($"{group.Key.ToString()}", headerStyle);
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("World Audio by killer")) DownloadAndImportPackage(Aud);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Simple Hand Particles by killer")) DownloadAndImportPackage(Part);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Simple Overrender Sphere by killer")) DownloadAndImportPackage(Sp);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("Cry fixed by killer")) DownloadAndImportPackage(Sp);
-            GUILayout.EndHorizontal();
+                foreach (var importable in group)
+                {
+                    GUILayout.Space(10);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"{importable.Name}", importableStyle);
 
-            GUILayout.Space(20);
-            GUI.backgroundColor = Color.black;
-            GUILayout.Label("                                                                             Idles", a);
+                    if (GUILayout.Button("Import", buttonStyle, GUILayout.Width(100), GUILayout.Height(30)))
+                        DownloadAndImportPackage(importable.Uri);
+                    GUILayout.EndHorizontal();
+                }
 
-            GUILayout.BeginHorizontal();
-            GUI.backgroundColor = Color.white;
-            if (GUILayout.Button("MyXelf")) DownloadAndImportPackage(Anim);
-            if (GUILayout.Button("HackerVR / DocMe")) DownloadAndImportPackage(Anim2);
-            GUILayout.EndHorizontal();
-
+                GUILayout.Space(10);
+                GUILayout.EndVertical();
+                GUILayout.Space(25);
+            }
 
             GUILayout.EndScrollView();
         }
-        //private string string name here = "";
-
-        // Add more URL varables as needed...
     }
 }

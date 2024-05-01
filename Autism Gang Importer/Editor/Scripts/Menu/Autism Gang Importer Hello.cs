@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using AutismImporter.Helper;
 using AutismImporter.Settings.Config;
 using UnityEditor;
 using UnityEngine;
@@ -30,6 +31,7 @@ namespace AutismImporter
         {
             CheckDiscordDll();
             EnsureDiscordControllerExists();
+            ImportablesHelper.LoadImportables();
         }
 
         private void CheckDiscordDll()
